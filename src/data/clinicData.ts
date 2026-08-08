@@ -4,7 +4,7 @@ export const CLINIC_INFO = {
   name: "Dra. Débora Costa",
   title: "Psicóloga Clínica & Psicoterapeuta",
   crp: "CRP 03/24682",
-  bio: "Especialista em Psicoterapia Cognitivo-Comportamental (TCC) e Psicanálise. Com ampla experiência clínica, meu trabalho é fundamentado na escuta ética, acolhedora e personalizada, auxiliando cada paciente na busca pelo autoconhecimento, superação da ansiedade e equilíbrio emocional através do atendimento online.",
+  bio: "Especialista em Terapia Cognitivo-Comportamental (TCC). Com ampla experiência clínica, meu trabalho é fundamentado na escuta ética, acolhedora e personalizada, auxiliando cada paciente na busca pelo autoconhecimento, superação da ansiedade e equilíbrio emocional através do atendimento online.",
   experienceYears: "8+",
   sessionsCount: "+2.500",
   address: "Atendimento 100% Online (Brasil e Exterior)",
@@ -116,8 +116,8 @@ export const FAQS: FaqItem[] = [
   {
     id: 'faq-4',
     category: 'abordagem',
-    question: 'Qual a diferença entre TCC e Psicanálise?',
-    answer: 'A TCC (Terapia Cognitivo-Comportamental) é mais focada na relação entre pensamentos, emoções e comportamentos atuais, com técnicas práticas. A Psicanálise investiga conteúdos inconscientes e experiências passadas. A Dra. Débora utiliza uma abordagem integrada para atender às particularidades de cada paciente.'
+    question: 'O que é a Terapia Cognitivo-Comportamental (TCC)?',
+    answer: 'A TCC (Terapia Cognitivo-Comportamental) é uma abordagem científica e estruturada focada na relação entre pensamentos, emoções e comportamentos. Trabalhamos com técnicas práticas para identificar distorções cognitivas e desenvolver ferramentas de enfrentamento para que o paciente conquiste maior autonomia e bem-estar emocional.'
   },
   {
     id: 'faq-5',

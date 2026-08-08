@@ -1,9 +1,4 @@
 name = "psidc"
 compatibility_date = "2026-08-08"
 compatibility_flags = ["nodejs_compat"]
-main = "dist/server.cjs"
-
-[site]
-bucket = "./dist"
-
-
+pages_build_output_dir = "./dist"

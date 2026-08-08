@@ -2,8 +2,6 @@ import React from 'react';
 import { CLINIC_INFO } from '../data/clinicData';
 import { NavigationTab } from '../types';
 import { Calendar, Heart, ShieldCheck, Video, Sparkles, Award } from 'lucide-react';
-import { useDoctorPhoto } from '../hooks/useDoctorPhoto';
-import { defaultDoctorPhoto } from '../utils/photoManager';
 
 interface HeroSectionProps {
   setActiveTab: (tab: NavigationTab) => void;
@@ -12,7 +10,6 @@ interface HeroSectionProps {
 export const HeroSection: React.FC<HeroSectionProps> = ({
   setActiveTab
 }) => {
-  const { photoUrl, uploadPhoto, isAdminMode } = useDoctorPhoto();
 
   return (
     <section className="relative overflow-hidden bg-[#FDFCF8] text-[#3A3A3A] pt-12 pb-20 px-4 sm:px-6 lg:px-8 border-b border-[#E8E4D9]">
@@ -30,7 +27,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Badges */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F2EFE9] border border-[#E8E4D9] text-[#5A6750] text-xs font-black uppercase tracking-widest">
               <Sparkles className="w-3.5 h-3.5 text-[#5A6750]" />
-              <span>Psicoterapia 100% Online • TCC & Psicanálise</span>
+              <span>Psicoterapia 100% Online • Terapia Cognitivo-Comportamental (TCC)</span>
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-light tracking-tight text-[#2C2C2C] leading-[1.1]">
@@ -90,54 +87,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <div className="bg-[#F5F2EA] rounded-[36px] sm:rounded-[48px] p-6 sm:p-8 border border-[#E8E4D9] shadow-inner space-y-6">
               
               {/* Profile Header */}
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex items-center gap-4">
-                  <div className="relative group">
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-[#D4A373] shadow-md shrink-0 bg-[#5A6750]">
-                      <img
-                        src={photoUrl}
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          if (target.src !== defaultDoctorPhoto) {
-                            target.src = defaultDoctorPhoto;
-                          }
-                        }}
-                        alt={CLINIC_INFO.name}
-                        className="w-full h-full object-cover object-[center_15%]"
-                        referrerPolicy="no-referrer"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="font-serif font-bold text-lg text-[#2C2C2C]">
-                      {CLINIC_INFO.name}
-                    </h3>
-                    <p className="text-xs text-[#5A6750] font-bold uppercase tracking-wider">{CLINIC_INFO.crp}</p>
-                    <p className="text-xs text-[#7A766C]">Psicologia Clínica & Saúde Mental</p>
-                  </div>
-                </div>
-
-                {/* Direct Upload Button (Always accessible) */}
-                <div className="shrink-0">
-                  <input
-                    type="file"
-                    id="hero-photo-upload"
-                    onChange={(e) => {
-                      if (e.target.files && e.target.files[0]) {
-                        uploadPhoto(e.target.files[0]);
-                      }
-                    }}
-                    accept="image/*"
-                    className="hidden"
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-[#D4A373] shadow-md shrink-0 bg-[#5A6750] overflow-hidden">
+                  <img
+                    src="/dra-debora.jpg"
+                    alt={CLINIC_INFO.name}
+                    className="w-full h-full object-cover object-center"
                   />
-                  <label
-                    htmlFor="hero-photo-upload"
-                    className="inline-flex items-center gap-1.5 px-3 py-2 bg-[#5A6750] hover:bg-[#47533E] text-white text-xs font-semibold rounded-full shadow-sm cursor-pointer transition-all hover:scale-105"
-                    title="Trocar a foto exibida no site"
-                  >
-                    <Sparkles className="w-3.5 h-3.5 text-[#D4A373]" />
-                    <span>Trocar Foto</span>
-                  </label>
+                </div>
+                <div>
+                  <h3 className="font-serif font-bold text-lg text-[#2C2C2C]">
+                    {CLINIC_INFO.name}
+                  </h3>
+                  <p className="text-xs text-[#5A6750] font-bold uppercase tracking-wider">{CLINIC_INFO.crp}</p>
+                  <p className="text-xs text-[#7A766C]">Psicologia Clínica & Saúde Mental</p>
                 </div>
               </div>
 

@@ -1,23 +1,13 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { CLINIC_INFO } from '../data/clinicData';
 import { NavigationTab } from '../types';
-import { Heart, ShieldCheck, CheckCircle2, Award, Clock, Calendar, Camera, RefreshCw } from 'lucide-react';
-import { useDoctorPhoto } from '../hooks/useDoctorPhoto';
-import { defaultDoctorPhoto } from '../utils/photoManager';
+import { Heart, ShieldCheck, CheckCircle2, Award, Clock, Calendar, Sparkles } from 'lucide-react';
 
 interface AboutSectionProps {
   setActiveTab: (tab: NavigationTab) => void;
 }
 
 export const AboutSection: React.FC<AboutSectionProps> = ({ setActiveTab }) => {
-  const { photoUrl, uploadPhoto, resetPhoto, isCustom, isAdminMode } = useDoctorPhoto();
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      uploadPhoto(e.target.files[0]);
-    }
-  };
 
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#FDFCF8] text-[#3A3A3A] border-b border-[#E8E4D9]">
@@ -40,84 +30,34 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ setActiveTab }) => {
         {/* Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           
-          {/* Avatar / Credentials Card */}
+          {/* Credentials Card */}
           <div className="lg:col-span-5">
             <div className="bg-[#F5F2EA] p-6 sm:p-8 rounded-[36px] border border-[#E8E4D9] shadow-inner space-y-6">
               
-              {/* Photo Container */}
-              <div className="relative overflow-hidden rounded-[28px] shadow-md border-2 border-[#E8E4D9] group bg-[#E8E4D9]/30">
+              {/* Doctor Photo Card */}
+              <div className="relative overflow-hidden rounded-[28px] border-2 border-[#D4A373]/40 shadow-md bg-[#5A6750]">
                 <img
-                  src={photoUrl}
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    if (target.src !== defaultDoctorPhoto) {
-                      target.src = defaultDoctorPhoto;
-                    }
-                  }}
-                  alt="Dra. Débora Costa - Psicóloga Clínica"
-                  className="w-full aspect-[4/5] sm:aspect-[3/4] md:aspect-[4/5] lg:aspect-[3/4] max-h-[520px] object-cover object-[center_15%] transition-transform duration-500 group-hover:scale-105"
-                  referrerPolicy="no-referrer"
+                  src="/dra-debora.jpg"
+                  alt={CLINIC_INFO.name}
+                  className="w-full aspect-[4/5] object-cover object-center"
                 />
-
-                {/* Upload Button Overlay (Always accessible) */}
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  onChange={handleFileChange}
-                  accept="image/*"
-                  className="hidden"
-                />
-                
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  className="absolute top-3 right-3 bg-[#5A6750] hover:bg-[#47533E] text-white p-2.5 rounded-full shadow-lg transition-all cursor-pointer flex items-center gap-1.5 text-xs px-3.5 border border-white/20 z-20"
-                  title="Clique para escolher a foto da Dra. Débora do seu dispositivo"
-                >
-                  <Camera className="w-4 h-4 text-[#D4A373]" />
-                  <span className="font-sans text-xs font-bold">Trocar Foto</span>
-                </button>
-
-                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#2C2C2C]/90 via-[#2C2C2C]/40 to-transparent p-5 text-white">
-                  <h3 className="text-xl font-serif font-bold">
+                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#2C2C2C]/90 via-[#2C2C2C]/50 to-transparent p-5 text-white">
+                  <h3 className="text-xl font-serif font-bold text-[#FDFCF8]">
                     {CLINIC_INFO.name}
                   </h3>
-                  <p className="text-xs font-bold text-[#A3B18A] uppercase tracking-wider">{CLINIC_INFO.crp}</p>
-                </div>
-              </div>
-              
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <p className="text-xs text-[#7A766C]">{CLINIC_INFO.title}</p>
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => fileInputRef.current?.click()}
-                    className="text-xs text-[#5A6750] hover:text-[#47533E] font-bold flex items-center gap-1.5 bg-[#E8E4D9]/60 hover:bg-[#E8E4D9] px-3 py-1.5 rounded-full transition-colors cursor-pointer"
-                  >
-                    <Camera className="w-3.5 h-3.5 text-[#D4A373]" />
-                    <span>Escolher Foto</span>
-                  </button>
-                  {isCustom && (
-                    <button
-                      onClick={resetPhoto}
-                      className="text-[11px] text-[#A25B5B] hover:underline flex items-center gap-1 cursor-pointer"
-                      title="Restaurar foto padrão"
-                    >
-                      <RefreshCw className="w-3 h-3" />
-                      <span>Restaurar</span>
-                    </button>
-                  )}
+                  <p className="text-xs font-bold text-[#A3B18A] uppercase tracking-wider mt-0.5">{CLINIC_INFO.crp}</p>
+                  <p className="text-xs text-[#D8D4C8] mt-0.5">{CLINIC_INFO.title}</p>
                 </div>
               </div>
 
-              <div className="space-y-2.5 text-xs text-[#3A3A3A] pt-4 border-t border-[#E8E4D9]">
+              <div className="space-y-2.5 text-xs text-[#3A3A3A] pt-2">
                 <div className="flex items-center gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#5A6750] shrink-0" />
                   <span>Especialista em Terapia Cognitivo-Comportamental</span>
                 </div>
                 <div className="flex items-center gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#5A6750] shrink-0" />
-                  <span>Aprofundamento na Teoria e Prática Psicanalítica</span>
+                  <span>Técnicas Práticas de Reestruturação Cognitiva</span>
                 </div>
                 <div className="flex items-center gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#5A6750] shrink-0" />
