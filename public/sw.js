@@ -1,9 +1,9 @@
-const CACHE_NAME = 'psi-debora-costa-pwa-v1';
+const CACHE_NAME = 'psi-debora-costa-pwa-v3';
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/favicon.svg'
+  './',
+  './index.html',
+  './manifest.json',
+  './favicon.svg'
 ];
 
 // Install event - Cache static assets
@@ -15,13 +15,14 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activate event - Clean old caches
+// Activate event - Clean old caches immediately
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
           if (cache !== CACHE_NAME) {
+            console.log('[ServiceWorker] Deleting old cache:', cache);
             return caches.delete(cache);
           }
         })
@@ -30,7 +31,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch event - Stale while revalidate / Network first strategy
+// Fetch event - Network First, fallback to cache
 self.addEventListener('fetch', (event) => {
   // Ignore non-GET or API requests for cache
   if (event.request.method !== 'GET' || event.request.url.includes('/api/')) {
@@ -38,8 +39,8 @@ self.addEventListener('fetch', (event) => {
   }
 
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      const fetchPromise = fetch(event.request).then((networkResponse) => {
+    fetch(event.request)
+      .then((networkResponse) => {
         if (networkResponse && networkResponse.status === 200) {
           const responseToCache = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => {
@@ -47,12 +48,9 @@ self.addEventListener('fetch', (event) => {
           });
         }
         return networkResponse;
-      }).catch(() => {
-        // Return cached response or fallback
-        return cachedResponse;
-      });
-
-      return cachedResponse || fetchPromise;
-    })
+      })
+      .catch(() => {
+        return caches.match(event.request);
+      })
   );
 });

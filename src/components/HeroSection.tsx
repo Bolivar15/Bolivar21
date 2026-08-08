@@ -3,6 +3,7 @@ import { CLINIC_INFO } from '../data/clinicData';
 import { NavigationTab } from '../types';
 import { Calendar, Heart, ShieldCheck, Video, Sparkles, Award } from 'lucide-react';
 import { useDoctorPhoto } from '../hooks/useDoctorPhoto';
+import { defaultDoctorPhoto } from '../utils/photoManager';
 
 interface HeroSectionProps {
   setActiveTab: (tab: NavigationTab) => void;
@@ -97,8 +98,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                         src={photoUrl}
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
-                          if (target.src !== '/dra-debora.jpg') {
-                            target.src = '/dra-debora.jpg';
+                          if (target.src !== defaultDoctorPhoto) {
+                            target.src = defaultDoctorPhoto;
                           }
                         }}
                         alt={CLINIC_INFO.name}

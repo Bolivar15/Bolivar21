@@ -3,6 +3,7 @@ import { CLINIC_INFO } from '../data/clinicData';
 import { NavigationTab } from '../types';
 import { Heart, ShieldCheck, CheckCircle2, Award, Clock, Calendar, Camera, RefreshCw } from 'lucide-react';
 import { useDoctorPhoto } from '../hooks/useDoctorPhoto';
+import { defaultDoctorPhoto } from '../utils/photoManager';
 
 interface AboutSectionProps {
   setActiveTab: (tab: NavigationTab) => void;
@@ -49,8 +50,8 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ setActiveTab }) => {
                   src={photoUrl}
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
-                    if (target.src !== '/dra-debora.jpg') {
-                      target.src = '/dra-debora.jpg';
+                    if (target.src !== defaultDoctorPhoto) {
+                      target.src = defaultDoctorPhoto;
                     }
                   }}
                   alt="Dra. Débora Costa - Psicóloga Clínica"
