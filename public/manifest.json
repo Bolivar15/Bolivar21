@@ -1,0 +1,47 @@
+{
+  "short_name": "Psi Débora",
+  "name": "Psicóloga Débora Costa - PWA Clínica",
+  "description": "Aplicativo oficial da Psicóloga Débora Costa (CRP 08/24464). Agendamento de consultas presenciais e online, diário de emoções, triagem inteligente e acolhimento.",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#FDFCF8",
+  "theme_color": "#5A6750",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "pt-BR",
+  "categories": ["medical", "health", "lifestyle"],
+  "shortcuts": [
+    {
+      "name": "Agendar Consulta",
+      "short_name": "Agendar",
+      "description": "Agende sua sessão presencial ou online",
+      "url": "/?tab=booking"
+    },
+    {
+      "name": "Diário de Emoções",
+      "short_name": "Diário",
+      "description": "Registre como você se sente hoje",
+      "url": "/?tab=mood"
+    },
+    {
+      "name": "Respiração Guiada",
+      "short_name": "Respiração",
+      "description": "Exercício de relaxamento para acalmar a ansiedade",
+      "url": "/?tab=breathing"
+    },
+    {
+      "name": "Tirar Dúvidas com IA",
+      "short_name": "Assistente IA",
+      "description": "Pergunte sobre como funciona a terapia",
+      "url": "/?tab=chat"
+    }
+  ]
+}

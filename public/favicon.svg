@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <rect width="512" height="512" rx="128" fill="#5A6750"/>
+  <!-- Organic Leaf & Heart Symbol -->
+  <path d="M256 120C210 180 140 230 140 310C140 376 192 410 256 410C320 410 372 376 372 310C372 230 302 180 256 120Z" fill="#A3B18A" fill-opacity="0.3"/>
+  <path d="M256 160C225 210 170 250 170 315C170 360 208 385 256 385C304 385 342 360 342 315C342 250 287 210 256 160Z" fill="#F5F2EA" fill-opacity="0.95"/>
+  <!-- Inner Heart Accent -->
+  <path d="M256 220C230 260 200 290 200 325C200 350 222 365 256 365C290 365 312 350 312 325C312 290 282 260 256 220Z" fill="#5A6750"/>
+  <circle cx="256" cy="290" r="14" fill="#D4A373"/>
+</svg>

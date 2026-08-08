@@ -1,0 +1,6 @@
+{
+  "name": "Psicóloga Débora Costa - PWA Clínica",
+  "description": "Aplicativo PWA oficial da Psicóloga Débora Costa. Agendamento de consultas presenciais e online, triagem com IA, diário de emoções, ferramentas de respiração guiada e informações de saúde mental.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
