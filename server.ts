@@ -1,12 +1,13 @@
 import express from "express";
 import path from "path";
+import fs from "fs/promises";
 import { GoogleGenAI, ThinkingLevel } from "@google/genai";
 import dotenv from "dotenv";
-import serverless from "serverless-http";
 
 dotenv.config();
 
 const app = express();
+const PORT = Number(process.env.PORT) || 3000;
 
 app.use(express.json());
 
@@ -28,7 +29,7 @@ app.get("/api/health", (_req, res) => {
   res.json({ status: "ok", geminiReady: !!process.env.GEMINI_API_KEY });
 });
 
-// Endpoint to handle upload photo - simulated for Cloudflare Workers (no local disk fs)
+// Endpoint to permanently save photo to public/dra-debora.jpg and dist/dra-debora.jpg
 app.post("/api/upload-photo", express.json({ limit: "15mb" }), async (req, res) => {
   try {
     const { imageData } = req.body;
@@ -36,10 +37,23 @@ app.post("/api/upload-photo", express.json({ limit: "15mb" }), async (req, res) 
       return res.status(400).json({ error: "Imagem inválida" });
     }
 
-    res.json({ success: true, message: "Foto processada com sucesso!" });
+    const base64Data = imageData.replace(/^data:image\/\w+;base64,/, "");
+    const buffer = Buffer.from(base64Data, "base64");
+
+    const publicPath = path.join(process.cwd(), "public", "dra-debora.jpg");
+    const distPath = path.join(process.cwd(), "dist", "dra-debora.jpg");
+
+    await fs.writeFile(publicPath, buffer);
+    try {
+      await fs.writeFile(distPath, buffer);
+    } catch (e) {
+      // ignore if dist directory doesn't exist yet
+    }
+
+    res.json({ success: true, message: "Foto salva com sucesso em public/dra-debora.jpg!" });
   } catch (err: any) {
-    console.error("Erro ao processar foto:", err);
-    res.status(500).json({ error: "Erro ao processar imagem." });
+    console.error("Erro ao salvar foto no servidor:", err);
+    res.status(500).json({ error: "Erro ao salvar imagem no servidor." });
   }
 });
 
@@ -80,7 +94,7 @@ DIRETRIZES DE RESPOSTA:
 1. Seja sempre acolhedor, empático, respeitoso e ético.
 2. Esclareça dúvidas sobre como funciona a psicoterapia em TCC, primeira sessão, sigilo e agendamento.
 3. Se o paciente relatar sentimentos de ansiedade, estresse ou angústia, ofereça suporte acolhedor e valide os sentimentos dele, incentivando o acompanhamento psicológico.
-4. IMPORTANTE: Caso haja menção a ideação suicida ou crise grave imediata, lembre com carinho que para emergências de saúde mental é recomendado recomendado entrar em contato imediato com o CVV (Centro de Valorização da Vida) pelo telefone 188 (gratuito, 24h) ou buscar um pronto atendimento (SAMU 192 / UPA).
+4. IMPORTANTE: Caso haja menção a ideação suicida ou crise grave imediata, lembre com carinho que para emergências de saúde mental é recomendado entrar em contato imediato com o CVV (Centro de Valorização da Vida) pelo telefone 188 (gratuito, 24h) ou buscar um pronto atendimento (SAMU 192 / UPA).
 5. Mantenha respostas claras, diretas, divididas em parágrafos curtos e amigáveis.
 6. Sempre inclua um convite gentil para o paciente agendar uma sessão inicial ou chamar a Dra. Débora no WhatsApp.`;
 
@@ -113,23 +127,27 @@ DIRETRIZES DE RESPOSTA:
   }
 });
 
-// Vite middleware in development
-if (process.env.NODE_ENV !== "production") {
-  const { createServer: createViteServer } = await import("vite");
-  const vite = await createViteServer({
-    server: { middlewareMode: true },
-    appType: "spa",
-  });
-  app.use(vite.middlewares);
+async function startServer() {
+  // Serve static assets in production or use Vite middleware in development
+  if (process.env.NODE_ENV !== "production") {
+    const { createServer: createViteServer } = await import("vite");
+    const vite = await createViteServer({
+      server: { middlewareMode: true },
+      appType: "spa",
+    });
+    app.use(vite.middlewares);
+  } else {
+    const distPath = path.join(process.cwd(), "dist");
+    app.use(express.static(distPath));
+    app.get("*", (_req, res) => {
+      res.sendFile(path.join(distPath, "index.html"));
+    });
+  }
 
-  const http = await import("http");
-  http.createServer(app).listen(3000, "0.0.0.0", () => {
-    console.log("Servidor PWA Psicóloga Débora Costa executando na porta 3000 (dev mode)");
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Servidor PWA Psicóloga Débora Costa executando na porta ${PORT}`);
   });
 }
 
-// Export ESM handler for Cloudflare Workers
-export default {
-  fetch: serverless(app),
-};
+startServer();
 
